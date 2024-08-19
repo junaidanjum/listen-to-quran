@@ -110,6 +110,7 @@ export function createMusicManager({
     },
     setPlaying(song) {
       const wasPlaying = !this.isPaused();
+      console.log('audio :>> ', audio);
       audio.src = song.url;
 
       if (wasPlaying) {
