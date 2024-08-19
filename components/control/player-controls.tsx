@@ -11,7 +11,6 @@ export interface TimeControlsProps {
 }
 
 export function PlayerControls({ musicManager }: TimeControlsProps) {
-  console.log('musicManager :>> ', musicManager);
   const randomize = () => {
     const songs = [...musicManager.queueManager.songs];
     const newList: Song[] = [];

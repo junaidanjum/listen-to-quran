@@ -90,7 +90,7 @@ export default function MusicPlayer() {
         className="flex flex-row gap-4 mt-auto items-end justify-center md:justify-between"
       >
         {musicManager && <Menu musicManager={musicManager} />}
-        <div className="w-full max-w-[250px] hidden md:block" data-trigger-container={true}>
+        <div className="w-full max-w-[250px]" data-trigger-container={true}>
           {musicManager && (
             <MusicVisualizer
               className="w-full h-[150px]"
