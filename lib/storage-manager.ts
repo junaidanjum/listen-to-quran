@@ -26,7 +26,7 @@ export function createStorageManager(): StorageManager {
       return [];
     },
     loadSongs() {
-      return [...defaultSongs, ...this.getCustomSongs()];
+      return defaultSongs;
     },
   };
 }

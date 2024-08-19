@@ -9,6 +9,7 @@ import { QueueItem } from "@/lib/queue-manager";
 import { Timeline, DurationControl } from "@/components/control/timeline";
 import Verse from "./verse";
 import { PlayerControls } from "./control/player-controls";
+import { Menu } from "./menu";
 
 export default function MusicPlayer() {
   const timelineRef = useRef<DurationControl>();
@@ -88,7 +89,7 @@ export default function MusicPlayer() {
         data-trigger={true}
         className="flex flex-row gap-4 mt-auto items-end justify-center md:justify-between"
       >
-        {/* {musicManager && <Menu musicManager={musicManager} />} */}
+        {musicManager && <Menu musicManager={musicManager} />}
         <div className="w-full max-w-[250px] hidden md:block" data-trigger-container={true}>
           {musicManager && (
             <MusicVisualizer
@@ -106,7 +107,7 @@ export default function MusicPlayer() {
             --:--
           </p>
         </div>
-        <Verse />
+        {/* <Verse /> */}
 
       </div>
       <motion.div
@@ -140,12 +141,10 @@ function SongDisplay({ song, musicManager }: { song: QueueItem, musicManager: an
       className="flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-3"
     >
       <div className="flex flex-row items-center gap-4">
-      {song.picture && (
-        <img alt="picture" src={song.picture} className="size-14 rounded-md" />
-      )}
+        <img alt="picture" src='sample.jpeg' className="size-14 rounded-md" />
       <div>
-        <p className="font-medium">{song.name}</p>
-        <p className="text-xs text-purple-200">{song.author}</p>
+          <p className="font-medium">{song.name_simple}</p>
+          <p className="text-xs text-purple-200">Mishari Alafasi</p>
         </div>
       </div>
       <div className="flex flex-row items-center gap-2">

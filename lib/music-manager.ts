@@ -108,11 +108,16 @@ export function createMusicManager({
     pause() {
       void audio.pause();
     },
-    setPlaying(song) {
+    async setPlaying(song) {
       const wasPlaying = !this.isPaused();
-      console.log('audio :>> ', audio);
-      audio.src = song.url;
-
+      console.log('download started');
+      await fetch(`https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/${song.id + 1}.mp3`)
+        .then(response => response.blob())
+        .then(blob => {
+          const audioUrl = URL.createObjectURL(blob);
+          audio.src = audioUrl
+          console.log('download complete');
+        })
       if (wasPlaying) {
         this.play();
       }

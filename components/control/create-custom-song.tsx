@@ -70,7 +70,7 @@ function CreateCustomSong({
   );
 }
 
-function NewSong({ onAdd }: { onAdd: (song: Song) => void }) {
+function NewSong({ onAdd }: { onAdd: (song: any) => void }) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
 
