@@ -34,7 +34,7 @@ export function Menu({ musicManager }: { musicManager: MusicManager }) {
         className={cn(
           buttonVariants({
             variant: "ghost",
-            className: "max-md:absolute max-md:top-8 max-md:right-8 cursor-pointer",
+            className: "max-md:absolute max-md:top-8 max-md:right-20 cursor-pointer",
           }),
         )}
         href='https://github.com/junaidanjum/play-quran'
