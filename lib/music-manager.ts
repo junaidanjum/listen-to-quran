@@ -1,4 +1,4 @@
-import { Song } from "@/music/data";
+import { Song } from "@/quran/data";
 import {
   createQueueManager,
   QueueItem,

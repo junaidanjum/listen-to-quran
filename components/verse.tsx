@@ -5,7 +5,7 @@ const Verse = () => {
   return (
     <div className="flex flex-col gap-2 items-center text-blue-200">
       <motion.span
-        key={`arabic`}
+        key="arabic"
         className="inline-block text-2xl font-light text-right"
         initial={{ y: 20, opacity: 0 }}
         animate={{
@@ -21,7 +21,7 @@ const Verse = () => {
         اَ لۡحَمۡدُ لِلّٰهِ الَّذِىۡۤ اَنۡزَلَ عَلٰى عَبۡدِهِ الۡكِتٰبَ وَلَمۡ يَجۡعَلْ لَّهٗ عِوَجًا  ؕ‏
       </motion.span>
       <motion.span
-        key={`english`}
+        key="translated"
         className="inline-block text-xs"
         initial={{ y: 20, opacity: 0 }}
         animate={{

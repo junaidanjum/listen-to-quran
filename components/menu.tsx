@@ -7,11 +7,12 @@ import { SongList } from "@/components/control/song-list";
 import { MusicManager } from "@/lib/music-manager";
 import { cn } from "@/lib/cn";
 import { buttonVariants } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Github, Search } from "lucide-react";
 
 export function Menu({ musicManager }: { musicManager: MusicManager }) {
   return (
-    <Popover>
+    <div className="flex">
+      <Popover>
       <PopoverTrigger
         id="menu-trigger"
         aria-label="Menu"
@@ -21,16 +22,25 @@ export function Menu({ musicManager }: { musicManager: MusicManager }) {
             className: "max-md:absolute max-md:top-8 max-md:right-8",
           }),
         )}
-      >
-
-
-        <Search size={20} strokeWidth={0.7} />
-
+        >
+          <Search size={20} strokeWidth={0.7} />
       </PopoverTrigger>
       <PopoverContent>
         <SongList musicManager={musicManager} />
         {/* <PlayerControls musicManager={musicManager} /> */}
       </PopoverContent>
     </Popover>
+      <a
+        className={cn(
+          buttonVariants({
+            variant: "ghost",
+            className: "max-md:absolute max-md:top-8 max-md:right-8 cursor-pointer",
+          }),
+        )}
+        href='https://github.com/junaidanjum/play-quran'
+        target="_blank"
+      ><Github size={20} strokeWidth={0.7} /> </a>
+
+    </div>
   );
 }

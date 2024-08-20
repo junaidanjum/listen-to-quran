@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 import { MusicManager } from "@/lib/music-manager";
 import { buttonVariants } from "@/components/ui/button";
-import { Song } from "@/music/data";
+import { Song } from "@/quran/data";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 import { BookOpen, ChevronLeft, ChevronRight, Dices, Pause, Play } from "lucide-react";
@@ -56,20 +56,20 @@ export function PlayerControls({ musicManager }: TimeControlsProps) {
             <Pause size={20} strokeWidth={0.7} />
         </button>
       )}
-      <button
+      {/* <button
         aria-label="Randomize queue"
         className={cn(buttonVariants({ variant: "secondary" }))}
         onClick={randomize}
       >
         <Dices size={20} strokeWidth={0.7} />
-      </button>
-      <button
+      </button> */}
+      {/* <button
         aria-label="Randomize queue"
         className={cn(buttonVariants({ variant: "secondary" }))}
       // onClick={randomize}
       >
         <BookOpen size={18} strokeWidth={0.7} />
-      </button>
+      </button> */}
       <button
         aria-label="Replay Previous Chapter"
         className={cn(buttonVariants({ variant: "secondary" }))}
