@@ -4,11 +4,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { SongList } from "@/components/control/song-list";
-import { PlayerControls } from "@/components/control/player-controls";
 import { MusicManager } from "@/lib/music-manager";
 import { cn } from "@/lib/cn";
 import { buttonVariants } from "@/components/ui/button";
-import { CreateCustomSongDialog } from "@/components/control/create-custom-song";
+import { Search } from "lucide-react";
 
 export function Menu({ musicManager }: { musicManager: MusicManager }) {
   return (
@@ -23,26 +22,14 @@ export function Menu({ musicManager }: { musicManager: MusicManager }) {
           }),
         )}
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="size-5"
-        >
-          <line x1="4" x2="20" y1="12" y2="12" />
-          <line x1="4" x2="20" y1="6" y2="6" />
-          <line x1="4" x2="20" y1="18" y2="18" />
-        </svg>
-        Menu
+
+
+        <Search size={20} strokeWidth={0.7} />
+
       </PopoverTrigger>
       <PopoverContent>
         <SongList musicManager={musicManager} />
-        <PlayerControls musicManager={musicManager} />
+        {/* <PlayerControls musicManager={musicManager} /> */}
       </PopoverContent>
     </Popover>
   );
