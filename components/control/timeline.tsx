@@ -13,7 +13,6 @@ export function Timeline({
 }) {
   const [value, setValue] = useState(0);
   const isDrawingRef = useRef(false);
-
   useEffect(() => {
     durationRef.current = (percent) => {
       if (isDrawingRef.current) return;
@@ -33,7 +32,6 @@ export function Timeline({
       onSlideEnd={(v) => {
         isDrawingRef.current = false;
         setValue(v);
-
         if (musicManager) {
           musicManager.setTime(v * musicManager.getDuration());
         }

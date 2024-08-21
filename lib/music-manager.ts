@@ -31,6 +31,8 @@ export interface MusicManagerOptions
   onNext?: (song: QueueItem | undefined) => void;
   onStateChange?: () => void;
   onTimeUpdate?: (currentTime: number, duration: number) => void;
+  loading: boolean
+  setLoading: (x: boolean) => void
 }
 
 export function createMusicManager({
@@ -58,6 +60,7 @@ export function createMusicManager({
       if (song) manager.setPlaying(song);
       options?.onNext?.(song);
       options.onTimeUpdate?.(0, 0);
+
     },
     onSongListUpdated,
   });
@@ -109,18 +112,16 @@ export function createMusicManager({
       void audio.pause();
     },
     async setPlaying(song) {
-      const wasPlaying = !this.isPaused();
-      console.log('download started');
+      options.setLoading(true)
+      this.pause()
       await fetch(`https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/${song.id + 1}.mp3`)
         .then(response => response.blob())
         .then(blob => {
-          const audioUrl = URL.createObjectURL(blob);
-          audio.src = audioUrl
-          console.log('download complete');
+          const audioURL = URL.createObjectURL(blob);
+          audio.src = audioURL
+          options.setLoading(false)
+          this.play();
         })
-      if (wasPlaying) {
-        this.play();
-      }
     },
     destroy() {
       this.pause();

@@ -10,6 +10,7 @@ import { Timeline, DurationControl } from "@/components/control/timeline";
 import Verse from "./verse";
 import { PlayerControls } from "./control/player-controls";
 import { Menu } from "./menu";
+import Loader from "./control/loader";
 
 export default function MusicPlayer() {
   const timelineRef = useRef<DurationControl>();
@@ -18,6 +19,7 @@ export default function MusicPlayer() {
   const [musicManager, setMusicManager] = useState<MusicManager>();
   // trigger re-renders
   const [, setDigit] = useState(0);
+  const [loading, setLoading] = useState(false)
 
   const paused = musicManager?.isPaused() ?? true;
   const currentSong = musicManager?.queueManager.getCurrentSong();
@@ -28,7 +30,6 @@ export default function MusicPlayer() {
         if (timeLabelRef.current) {
           timeLabelRef.current.innerText = formatSeconds(currentTime);
         }
-
         timelineRef.current?.((currentTime / duration) * 100);
       },
       onStateChange: () => {
@@ -40,6 +41,10 @@ export default function MusicPlayer() {
       onSongListUpdated() {
         setDigit((prev) => prev + 1);
       },
+      loading,
+      setLoading(x) {
+        setLoading(x)
+      }
     });
 
     const shortcut = createShortcutManager({ musicManager: manager });
@@ -78,9 +83,9 @@ export default function MusicPlayer() {
       className="relative flex flex-col h-svh px-12 py-16 z-[2] text-purple-100 md:p-24"
       onMouseDown={onClick}
     >
-      <AnimatedTitle text={paused ? "Click to Play" : "Quran Radio"} />
+      <AnimatedTitle text={paused ? loading ? "Downloading.." : "Click to Play" : "Quran Radio"} />
       <div className="w-full max-w-[500px] mt-2">
-        <Timeline musicManager={musicManager} durationRef={timelineRef} />
+        {loading ? <Loader /> : <Timeline musicManager={musicManager} durationRef={timelineRef} />}
         <AnimatePresence mode="wait" initial={false}>
           {currentSong ? <SongDisplay song={currentSong} musicManager={musicManager} /> : null}
         </AnimatePresence>

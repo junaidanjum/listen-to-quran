@@ -6,6 +6,19 @@ body {
     font-family: 'Inter Variable', sans-serif;
 }
 
+@keyframes slide {
+  0% {
+    left: 10px; 
+  }
+  100% {
+    left: 500px
+  }
+}
+
+.animate-slide {
+  animation: slide 3s infinite linear;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 0px;
