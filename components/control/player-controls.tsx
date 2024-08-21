@@ -1,10 +1,9 @@
 import { cn } from "@/lib/cn";
 import { MusicManager } from "@/lib/music-manager";
 import { buttonVariants } from "@/components/ui/button";
-import { Song } from "@/quran/data";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
-import { BookOpen, ChevronLeft, ChevronRight, Dices, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Dices, Pause, Play } from "lucide-react";
 
 export interface TimeControlsProps {
   musicManager: MusicManager;
@@ -12,14 +11,8 @@ export interface TimeControlsProps {
 
 export function PlayerControls({ musicManager }: TimeControlsProps) {
   const randomize = () => {
-    const songs = [...musicManager.queueManager.songs];
-    const newList: Song[] = [];
-    while (songs.length > 0) {
-      const idx = Math.floor(Math.random() * songs.length);
-      const selected = songs.splice(idx, 1)[0];
-      newList.push(selected);
-    }
-    musicManager.queueManager.setSongs(newList);
+    const randomChapterIndex = Math.floor(Math.random() * 114)
+    musicManager.queueManager.setIndex(randomChapterIndex);
   };
 
   const playNext = () => {
@@ -56,13 +49,13 @@ export function PlayerControls({ musicManager }: TimeControlsProps) {
             <Pause size={20} strokeWidth={0.7} />
         </button>
       )}
-      {/* <button
-        aria-label="Randomize queue"
+      <button
+        aria-label="Randomize Surah"
         className={cn(buttonVariants({ variant: "secondary" }))}
         onClick={randomize}
       >
         <Dices size={20} strokeWidth={0.7} />
-      </button> */}
+      </button>
       {/* <button
         aria-label="Randomize queue"
         className={cn(buttonVariants({ variant: "secondary" }))}
