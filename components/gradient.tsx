@@ -1,16 +1,22 @@
 import { ShaderGradient, ShaderGradientCanvas } from "shadergradient";
 import React, { useMemo } from "react";
 
+
+
 const colorSets = [
   ["#606080", "#8d7dca", "#212121"],
   ["#80ffc3", "#a6574e", "#00298a"],
   ["#f57ff3", "#58426e", "#210c1c"],
 ];
 
+
+
 export function Gradient({ currentId }: { currentId: number }) {
   const set = useMemo(() => {
-    return colorSets[currentId % colorSets.length];
+    return colorSets[Math.floor(Math.random() * (colorSets.length))];
   }, [currentId]);
+
+
 
   return (
     <ShaderGradientCanvas>

@@ -121,7 +121,7 @@ export default function MusicPlayer() {
         data-trigger-container={true}
         className="absolute inset-0 z-[-1]"
         animate={{
-          opacity: paused ? 0.3 : 1,
+          opacity: paused ? 0.2 : 1,
         }}
         initial={{
           opacity: 0,
