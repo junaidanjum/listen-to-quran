@@ -1,15 +1,19 @@
 import { MusicManager } from "@/lib/music-manager";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Slider } from "@/components/ui/slider";
+import Loader from "./loader";
 
 export type DurationControl = (percent: number) => void;
 
 export function Timeline({
   musicManager,
   durationRef,
+  isPaused
 }: {
   musicManager?: MusicManager;
   durationRef: MutableRefObject<DurationControl | undefined>;
+    isPaused: boolean
+
 }) {
   const [value, setValue] = useState(0);
   const isDrawingRef = useRef(false);
@@ -17,11 +21,14 @@ export function Timeline({
     durationRef.current = (percent) => {
       if (isDrawingRef.current) return;
 
-      setValue(percent / 100);
+      if (isFinite(percent)) {
+        setValue(percent / 100);
+      }
     };
   }, []);
 
   return (
+    value === 0 && !isPaused ? <Loader /> : 
     <Slider
       value={value}
       aria-valuetext="Time"

@@ -23,6 +23,7 @@ export default function MusicPlayer() {
 
   const paused = musicManager?.isPaused() ?? true;
   const currentSong = musicManager?.queueManager.getCurrentSong();
+  const duration = musicManager?.getDuration()
 
   useEffect(() => {
     const manager = createMusicManager({
@@ -83,9 +84,10 @@ export default function MusicPlayer() {
       className="relative flex flex-col h-svh px-12 py-16 z-[2] text-purple-100 md:p-24"
       onMouseDown={onClick}
     >
+
       <AnimatedTitle text={paused ? loading ? "Downloading.." : "From Darkness" : "To Light"} />
       <div className="w-full max-w-[500px] mt-2">
-        {loading ? <Loader /> : <Timeline musicManager={musicManager} durationRef={timelineRef} />}
+        {loading ? <Loader /> : <Timeline musicManager={musicManager} durationRef={timelineRef} isPaused={paused} />}
         <AnimatePresence mode="wait" initial={false}>
           {currentSong ? <SongDisplay song={currentSong} musicManager={musicManager} /> : null}
         </AnimatePresence>
