@@ -83,7 +83,7 @@ export default function MusicPlayer() {
       className="relative flex flex-col h-svh px-12 py-16 z-[2] text-purple-100 md:p-24"
       onMouseDown={onClick}
     >
-      <AnimatedTitle text={paused ? loading ? "Downloading.." : "Click to Play" : "Quran Radio"} />
+      <AnimatedTitle text={paused ? loading ? "Downloading.." : "From Darkness" : "To Light"} />
       <div className="w-full max-w-[500px] mt-2">
         {loading ? <Loader /> : <Timeline musicManager={musicManager} durationRef={timelineRef} />}
         <AnimatePresence mode="wait" initial={false}>
