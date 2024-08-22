@@ -1,4 +1,5 @@
 import { Song } from "@/quran/data";
+import songs from '@/quran/data.json'
 import {
   createQueueManager,
   QueueItem,
@@ -43,10 +44,82 @@ export function createMusicManager({
   const analyser = context.createAnalyser();
   const audio = new Audio();
 
+  let mediaSource: MediaSource | null = null;
+  let sourceBuffer: SourceBuffer | null = null;
+
+  // @ts-ignore
+  const fetchAudioStream = async (url: string, sourceBuffer: SourceBuffer, mediaSource: MediaSource) => {
+    try {
+      const response = await fetch(url);
+      // @ts-ignore
+      const reader = response.body.getReader();
+      let sourceBufferUpdating = false;
+
+      const read = () => {
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            if (!sourceBufferUpdating) {
+              mediaSource.endOfStream();
+            }
+            return;
+          }
+
+          const append = () => {
+            if (!sourceBufferUpdating) {
+              sourceBufferUpdating = true;
+              try {
+                sourceBuffer.appendBuffer(value);
+              } catch (e) {
+                if (e instanceof DOMException) {
+                  if (e.name === 'QuotaExceededError') {
+                    // Wait for the buffer to be ready
+                    sourceBuffer.addEventListener('updateend', append, { once: true });
+                  } else {
+                    console.error('Error appending buffer:', e);
+                  }
+                } else {
+                  console.error('Error appending buffer:', e);
+                }
+              }
+            }
+          };
+
+          append();
+          sourceBuffer.addEventListener('updateend', () => {
+            sourceBufferUpdating = false;
+            read();
+          }, { once: true });
+
+        }).catch(error => {
+          console.error('Error reading stream:', error);
+        });
+      };
+
+      read();
+    } catch (error) {
+      console.error('Error fetching the audio stream:', error);
+    }
+  };
+
+  const cleanupMediaSource = () => {
+    if (mediaSource) {
+      mediaSource.removeEventListener('sourceopen', () => { });
+      if (sourceBuffer) {
+        sourceBuffer.removeEventListener('updateend', () => { });
+      }
+      URL.revokeObjectURL(audio.src);
+      audio.src = '';
+      mediaSource = null;
+      sourceBuffer = null;
+    }
+  };
+
+
   const onStateChange = () => {
     options.onStateChange?.();
   };
   const onTimeUpdate = () => {
+    // options.onTimeUpdate?.(audio.currentTime, songs.filter(a => a.id === queueManager.currentIndex + 1)[0].duration || 0);
     options.onTimeUpdate?.(audio.currentTime, audio.duration);
   };
   const onEnded = () => {
@@ -85,6 +158,7 @@ export function createMusicManager({
       return audio.currentTime;
     },
     getDuration(): number {
+      //TODO: return songs.filter(a => a.id === queueManager.currentIndex + 1)[0].duration || 0;
       return audio.duration;
     },
     setTime(time: number) {
@@ -112,16 +186,16 @@ export function createMusicManager({
       void audio.pause();
     },
     async setPlaying(song) {
-      options.setLoading(true)
-      this.pause()
-      await fetch(`https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/${song.id + 1}.mp3`)
-        .then(response => response.blob())
-        .then(blob => {
-          const audioURL = URL.createObjectURL(blob);
-          audio.src = audioURL
-          options.setLoading(false)
-          this.play();
-        })
+      cleanupMediaSource()
+      mediaSource = new MediaSource();
+      audio.src = URL.createObjectURL(mediaSource);
+      mediaSource.addEventListener('sourceopen', () => {
+        if (mediaSource) {
+          sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+          fetchAudioStream(`https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/${song.id + 1}.mp3`, sourceBuffer, mediaSource);
+        }
+        this.play();
+      });
     },
     destroy() {
       this.pause();
