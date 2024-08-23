@@ -37,7 +37,7 @@ export function Menu({ musicManager }: { musicManager: MusicManager }) {
             className: "max-md:absolute max-md:top-8 max-md:right-20 cursor-pointer",
           }),
         )}
-        href='https://github.com/junaidanjum/play-quran'
+        href='https://github.com/junaidanjum/listen-to-quran'
         target="_blank"
       ><Github size={20} strokeWidth={0.7} /> </a>
 
