@@ -1,6 +1,6 @@
 ## Quran Radio
 
-This is a simple and elegant Quran player solely built for the purpose of listening to Quran, that's it. To be able to simply hit a URL and start listening to Quran is what the main purpose of building this application is.If you find it useful, please feel free to drop me a message.
+This is a simple and elegant Quran player solely built for the purpose of listening to Quran, that's it. To be able to simply hit a URL and start listening to Quran is what the main purpose of building this application is.If you find it useful, please feel free to drop me a message. *It is a work in progress. I recommend checking the app on Google Chrome on Desktop.*
 
 ## Features
 The recitation is only in Arabic by Mishari Alafasi. 
