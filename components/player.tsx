@@ -7,7 +7,7 @@ import { formatSeconds } from "@/lib/format";
 import { AnimatePresence, motion } from "framer-motion";
 import { QueueItem } from "@/lib/queue-manager";
 import { Timeline, DurationControl } from "@/components/control/timeline";
-import Verse from "./verse";
+// import Verse from "./verse";
 import { PlayerControls } from "./control/player-controls";
 import { Menu } from "./menu";
 import Loader from "./control/loader";
@@ -19,11 +19,11 @@ export default function MusicPlayer() {
   const [musicManager, setMusicManager] = useState<MusicManager>();
   // trigger re-renders
   const [, setDigit] = useState(0);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const paused = musicManager?.isPaused() ?? true;
   const currentSong = musicManager?.queueManager.getCurrentSong();
-  const duration = musicManager?.getDuration()
+  const duration = musicManager?.getDuration();
 
   useEffect(() => {
     const manager = createMusicManager({
@@ -44,8 +44,8 @@ export default function MusicPlayer() {
       },
       loading,
       setLoading(x) {
-        setLoading(x)
-      }
+        setLoading(x);
+      },
     });
 
     const shortcut = createShortcutManager({ musicManager: manager });
@@ -64,7 +64,7 @@ export default function MusicPlayer() {
 
     const target = e.target as Element;
     const isTrigger = target.matches(
-      "[data-trigger-container] *, [data-trigger-container], [data-trigger]",
+      "[data-trigger-container] *, [data-trigger-container], [data-trigger]"
     );
 
     if (!isTrigger) return;
@@ -84,12 +84,25 @@ export default function MusicPlayer() {
       className="relative flex flex-col h-svh px-12 py-16 z-[2] text-purple-100 md:p-24"
       onMouseDown={onClick}
     >
-
-      <AnimatedTitle text={paused ? loading ? "Downloading.." : "From Darkness" : "To Light"} />
+      <AnimatedTitle
+        text={
+          paused ? (loading ? "Downloading.." : "From Darkness") : "To Light"
+        }
+      />
       <div className="w-full max-w-[500px] mt-2">
-        {loading ? <Loader /> : <Timeline musicManager={musicManager} durationRef={timelineRef} isPaused={paused} />}
+        {loading ? (
+          <Loader />
+        ) : (
+          <Timeline
+            musicManager={musicManager}
+            durationRef={timelineRef}
+            isPaused={paused}
+          />
+        )}
         <AnimatePresence mode="wait" initial={false}>
-          {currentSong ? <SongDisplay song={currentSong} musicManager={musicManager} /> : null}
+          {currentSong ? (
+            <SongDisplay song={currentSong} musicManager={musicManager} />
+          ) : null}
         </AnimatePresence>
       </div>
       <div
@@ -115,7 +128,6 @@ export default function MusicPlayer() {
           </p>
         </div>
         {/* <Verse /> */}
-
       </div>
       <motion.div
         data-trigger-container={true}
@@ -137,7 +149,13 @@ export default function MusicPlayer() {
   );
 }
 
-function SongDisplay({ song, musicManager }: { song: QueueItem, musicManager: any }) {
+function SongDisplay({
+  song,
+  musicManager,
+}: {
+  song: QueueItem;
+  musicManager: any;
+}) {
   return (
     <motion.div
       key={song.id}
@@ -148,8 +166,8 @@ function SongDisplay({ song, musicManager }: { song: QueueItem, musicManager: an
       className="flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-3"
     >
       <div className="flex flex-row items-center gap-4">
-        <img alt="picture" src='sample.jpeg' className="size-14 rounded-md" />
-      <div>
+        <img alt="picture" src="sample.jpeg" className="size-14 rounded-md" />
+        <div>
           <p className="font-medium">{song.name_simple}</p>
           <p className="text-xs text-purple-200">Mishari Alafasi</p>
         </div>
@@ -166,7 +184,7 @@ function AnimatedTitle({ text }: { text: string }) {
   let index = 0;
 
   return (
-    <h1 className="text-6xl sm:text-8xl font-light leading-[0.9] tracking-[-0.1em] md:text-9xl md:leading-[0.9] md:tracking-[-0.1em]">
+    <h1 className="text-4xl mt-10 sm:mt-0 sm:text-8xl font-light leading-[0.9] tracking-[-0.1em] md:text-9xl md:leading-[0.9] md:tracking-[-0.1em]">
       {words.map((word, i) => (
         <motion.span key={i} className="inline-block mr-2 sm:mr-8 break-keep">
           {word.split("").map((c, j) => (
